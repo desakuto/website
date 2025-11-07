@@ -3,10 +3,10 @@ Desa Kuto — Static HTML prototype
 
 Files:
 - index.html : homepage (static)
-- assets/css/main.css : stylesheet
-- assets/js/main.js : small script (sets year)
-- assets/images/logo.png : logo used in header (copied if available)
-- assets/images/photo1.svg ... photo6.svg : gallery sample images
+- website/assets/css/main.css : stylesheet
+- website/assets/js/main.js : small script (sets year)
+- website/assets/images/logo.png : logo used in header (copied if available)
+- website/assets/images/photo1.svg ... photo6.svg : gallery sample images
 
 How to use:
 - Open index.html in browser to preview.
