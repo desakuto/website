@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800">
+  <rect width="100%" height="100%" fill="#c8b6e2"/>
+  <rect x="10" y="10" width="1180" height="780" fill="none" stroke="#774aa8" stroke-width="14"/>
+  <text x="50" y="360" font-size="40" fill="#2b104d">Foto Kegiatan 6</text>
+</svg>
