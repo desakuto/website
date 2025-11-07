@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#2e1a47">
   <title>Desa Kuto — Resmi</title>
   <meta name="description" content="Web Desa Kuto">
-  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="website/assets/css/main.css">
 </head>
 <style>
 /* === Fade-in Smooth Animation (Seperti Data.html) === */
@@ -36,7 +36,7 @@
 <body>
 
   <header class="site-header fade-in">
-    <img class="site-logo" src="assets/images/logo.png" alt="Logo Desa Kuto">
+    <img class="site-logo" src="website/assets/images/logo.png" alt="Logo Desa Kuto">
     <div class="site-name">
       <h1>DESA KUTO</h1>
       <p class="tagline">KECAMATAN KERJO KABUPATEN KARANGANYAR</p>
@@ -65,7 +65,7 @@
     <section id="sambutan" class="container section fade-in">
       <h2>Sambutan Kepala Desa</h2>
       <div class="kades-card">
-        <img src="assets/images/kepala-desa.png" alt="Kepala Desa Desa Kuto" class="photo-kades" loading="lazy">
+        <img src="website/assets/images/kepala-desa.png" alt="Kepala Desa Desa Kuto" class="photo-kades" loading="lazy">
         <div>
           <p>Assalamu'alaikum Warahmatullahi Wabarakatuh,<br><br>
           Syukur kehadirat Tuhan Yang Maha Esa, atas rahmat-Nya, website portal resmi Desa Kuto ini dapat hadir di tengah-tengah masyarakat.
@@ -101,7 +101,7 @@
   </p>
 </section>
 <script>
-fetch('assets/data/berita.json')
+fetch('website/assets/data/berita.json')
   .then(res => res.json())
   .then(data => {
     // Urutkan menurut tanggal terbaru
