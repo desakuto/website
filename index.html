@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#2e1a47">
+  <title>Desa Kuto — Resmi</title>
+  <meta name="description" content="Web Desa Kuto">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<style>
+/* === Fade-in Smooth Animation (Seperti Data.html) === */
+.fade-in {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeIn .8s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Delay per section agar Cinematic */
+.site-header { animation-delay: 0.10s; }
+.hero        { animation-delay: 0.25s; }
+#visi        { animation-delay: 0.45s; }
+#sambutan    { animation-delay: 0.65s; }
+#berita      { animation-delay: 0.85s; }
+#kontak      { animation-delay: 1.05s; }
+.site-footer { animation-delay: 1.25s; }
+</style>
+
+<body>
+
+  <header class="site-header fade-in">
+    <img class="site-logo" src="assets/images/logo.png" alt="Logo Desa Kuto">
+    <div class="site-name">
+      <h1>DESA KUTO</h1>
+      <p class="tagline">KECAMATAN KERJO KABUPATEN KARANGANYAR</p>
+    </div>
+    <nav id="primary-navigation" class="site-nav container" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html" class="active">Beranda</a></li>
+        <li><a href="berita.html">Berita</a></li>
+        <li><a href="profil.html">Profil Desa</a></li>
+        <li><a href="data.html">Data Wilayah</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+
+    <!-- HERO DARK ROYAL PURPLE -->
+    <section id="home" class="hero fade-in">
+        <h2>Selamat Datang di Website Desa Kuto</h2>
+        <p>Portal Resmi Informasi dan Layanan Publik Desa Kuto.</p>
+    </section>
+
+    <!-- SAMBUTAN KADES PREMIUM -->
+    <section id="sambutan" class="container section fade-in">
+      <h2>Sambutan Kepala Desa</h2>
+      <div class="kades-card">
+        <img src="assets/images/kepala-desa.png" alt="Kepala Desa Desa Kuto" class="photo-kades" loading="lazy">
+        <div>
+          <p>Assalamu'alaikum Warahmatullahi Wabarakatuh,<br><br>
+          Syukur kehadirat Tuhan Yang Maha Esa, atas rahmat-Nya, website portal resmi Desa Kuto ini dapat hadir di tengah-tengah masyarakat.
+          Website ini merupakan wujud komitmen kami dalam meningkatkan kualitas pelayanan publik dan tata kelola Pemerintahan Desa.
+          Selamat datang dan selamat menjelajah informasi di website kami.</p>
+	  <p>Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+          <p><b>Pj. Kepala Desa Kuto</b><br>Karyadi Agung Winarno</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISI MISI -->
+    <section id="visi" class="container section fade-in">
+      <h2>Visi &amp; Misi</h2>
+      <div class="card">
+        <h3>Visi</h3>
+        <p>“Dengan keterbukaan atau transparansi pelayanan Pemerintahan, bersama membangun Masyarakat Desa Kuto yang lebih maju dan sejahtera, Maju bersama kita bisa.”</p>
+        <h3>Misi</h3>
+        <ol>
+          <li>Menciptakan Pemerintahan Desa Kuto yang bersih dan berwibawa;</li>
+          <li>Menjalankan Pemerintahan Desa Kuto dengan Jujur dan terbuka / transparan;</li>
+          <li>Melibatkan seluruh warga Masyarakat dalam Perencanaan Pembangunan Infrastruktur;</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- BERITA TERBARU SLIDER -->
+   <section id="berita" class="container section fade-in">
+  <h2>Berita Terbaru</h2>
+  <div id="beritaTerbaru"></div>
+  <p style="text-align:center;margin-top:10px;">
+    <a href="berita.html" class="btn-primary">Lihat Semua Berita</a>
+  </p>
+</section>
+<script>
+fetch('assets/data/berita.json')
+  .then(res => res.json())
+  .then(data => {
+    // Urutkan menurut tanggal terbaru
+    data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+
+    const terbaru = data.slice(0, 3);
+    const list = document.getElementById("beritaTerbaru");
+
+    terbaru.forEach(item => {
+      list.innerHTML += `
+        <article class="news fade-in">
+          <img src="${item.gambar}" class="news-thumb" alt="${item.judul}">
+          <h4>${item.judul}</h4>
+          <p class="meta">${item.tanggal} · ${item.kategori}</p>
+          <p>${item.excerpt} 
+            <a href="${item.link}" class="read-more">Baca selengkapnya</a>
+          </p>
+        </article>
+      `;
+    });
+  })
+  .catch(err => console.error('Error:', err));
+</script>
+
+<button class="slider-nav prev">
+    ‹
+</button>
+<button class="slider-nav next">
+    ›
+</button>
+
+    </section>
+
+    <!-- KONTAK -->
+<section id="kontak" class="container section fade-in">
+  <h2>Rating Pengunjung</h2>
+  <p>Berikan rating untuk website Desa Kuto :</p>
+
+  <div class="rating-box">
+    <span class="star" data-rate="1">★</span>
+    <span class="star" data-rate="2">★</span>
+    <span class="star" data-rate="3">★</span>
+    <span class="star" data-rate="4">★</span>
+    <span class="star" data-rate="5">★</span>
+  </div>
+
+  <p id="thanks-msg" style="display:none;margin-top:12px;color:#f6d679;font-size:18px;font-weight:600;">
+    ✅ Terima kasih atas penilaiannya!
+  </p>
+
+  <p style="margin-top:18px;font-size:15px;color:#c8b3e6;">
+    Butuh bantuan layanan? Klik chat di kanan bawah 👇
+  </p>
+</section>
+
+<script>
+const stars = document.querySelectorAll(".star");
+const thanks = document.getElementById("thanks-msg");
+let ratingDone = false;
+
+stars.forEach(star => {
+  star.addEventListener("click", () => {
+    if (ratingDone) return;
+
+    const rating = star.dataset.rate;
+    stars.forEach(s => s.classList.remove("active"));
+
+    for (let i = 0; i < rating; i++) {
+      stars[i].classList.add("active");
+    }
+
+    thanks.style.display = "block";
+    ratingDone = true;
+  });
+});
+</script>
+
+    <section id="kontak" class="container section fade-in">
+      <h2>Kontak &amp; Layanan</h2>
+      <div class="grid-2">
+        <div>
+          <p>Untuk layanan dan informasi, hubungi via WhatsApp :</p>
+          <p><a class="btn-primary" href="https://wa.me/628999162001" target="_blank">Chat WhatsApp Desa Kuto</a></p>
+        </div>
+       </section>
+
+  </main>
+
+  <!-- FOOTER PREMIUM -->
+  <footer class="site-footer fade-in">
+    <div class="container">
+      <p>&copy; <span id="year"></span> DESA KUTO — JAWARA</p>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/628999162001" class="wa-floating" target="_blank">💬</a>
+
+<script>
+  document.getElementById('year').textContent=new Date().getFullYear();
+  const slider = document.getElementById('newsSlider');
+  let autoScroll = setInterval(()=>slideRight(), 3500);
+  slider.addEventListener('mouseover', ()=>clearInterval(autoScroll));
+  slider.addEventListener('mouseout', ()=>autoScroll = setInterval(()=>slideRight(), 3500));
+  function slideLeft(){ slider.scrollBy({left:-300, behavior:'smooth'}); }
+  function slideRight(){ slider.scrollBy({left:300, behavior:'smooth'}); }
+</script>
+<script>
+  fetch('assets/data/berita.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById("newsContainer");
+
+      data.forEach(item => {
+        container.innerHTML += `
+          <article class="news fade-in">
+            <img src="${item.gambar}" alt="${item.judul}" class="news-thumb">
+            <h4>${item.judul}</h4>
+            <p class="meta">${item.tanggal} · ${item.kategori}</p>
+            <p>${item.excerpt} <a href="${item.link}" style="color:#0096FF;">Baca selengkapnya</a></p>
+          </article>
+        `;
+      });
+    })
+    .catch(error => console.error("Gagal memuat data:", error));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Berita Desa Kuto — Resmi</title>
+  <link rel="icon" href="assets/images/favicon-gold.png" type="image/png">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<style>
+/* === Fade-in Smooth Animation (Seperti Data.html) === */
+.fade-in {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeIn .8s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Delay per section agar Cinematic */
+.site-header { animation-delay: 0.10s; }
+.hero        { animation-delay: 0.25s; }
+#visi        { animation-delay: 0.45s; }
+#sambutan    { animation-delay: 0.65s; }
+#berita      { animation-delay: 0.85s; }
+#kontak      { animation-delay: 1.05s; }
+.site-footer { animation-delay: 1.25s; }
+</style>
+
+<body>
+  <header class="site-header">
+       <nav class="site-nav container">
+      <ul>
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="berita.html" class="active">Berita</a></li>
+        <li><a href="profil.html">Profil Desa</a></li>
+        <li><a href="data.html">Data Wilayah</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+      </ul>
+    </nav>
+  </header>
+
+     <section id="berita-list" class="container section fade-in">
+  <h2>Berita Desa Kuto</h2>
+  <div id="newsContainer"></div>
+</section>
+
+
+    <!-- Pagination placeholder (bisa dikembangkan) -->
+    <div style="text-align:center;margin-top:20px">
+<button class="slider-nav prev">
+    ‹
+</button>
+<button class="slider-nav next">
+    ›
+</button>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> Desa Kuto — Jawara.</p>
+    </div>
+  </footer>
+
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body>
+</html>
