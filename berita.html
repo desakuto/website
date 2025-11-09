@@ -62,9 +62,10 @@
   </footer>
 
 <script>
+<script>
 fetch('assets/data/berita.json')
   .then(res => res.json())
-  .then(async data => {
+  .then(data => {
     const list = document.getElementById("newsContainer");
     list.innerHTML = "";
 
@@ -73,26 +74,28 @@ fetch('assets/data/berita.json')
       new Date(a.tanggal.split('-').reverse().join('-'))
     );
 
-    for (const item of data.berita) {
-      let igHTML = "";
+    data.berita.forEach(item => {
+      let igEmbedHTML = "";
+      
       if (item.instagram) {
-        try {
-          const url = `https://graph.facebook.com/v19.0/instagram_oembed?url=${encodeURIComponent(item.instagram)}&maxwidth=540&omitscript=true`;
-          const r = await fetch(url);
-          const j = await r.json();
-          igHTML = j.html || "";
-        } catch (e) { console.error(e); }
+        igEmbedHTML = `
+          <blockquote class="instagram-media"
+            data-instgrm-permalink="${item.instagram}"
+            data-instgrm-version="14"
+            style="max-width: 540px; width: 100%; margin: 15px auto;">
+          </blockquote>
+        `;
       }
 
       list.innerHTML += `
         <article class="berita-item fade-in" style="text-align:center;margin-bottom:45px;">
           <h3>${item.judul}</h3>
           <p style="color:#aaa;font-size:14px;">${item.tanggal}</p>
-          <div class="ig-wrapper">${igHTML}</div>
+          ${igEmbedHTML}
           <hr style="margin-top:35px;">
         </article>
       `;
-    }
+    });
 
     if (window.instgrm) window.instgrm.Embeds.process();
   })
