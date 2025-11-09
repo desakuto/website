@@ -449,3 +449,7 @@ h1, h2, h3, h4 {
   border-radius: 0 !important;
   box-shadow: none !important;
 }
+.berita-item h3, .berita-item p {
+  text-align: left;
+  margin-left: 20px; /* Memberikan sedikit ruang dari kiri */
+}
