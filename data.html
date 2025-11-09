@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Data Wilayah Desa Kuto</title>
-  <link rel="stylesheet" href="website/assets/css/main.css">
+  <title>Desa Kuto — #JAWARA</title>
+  <link rel="stylesheet" href="assets/css/main.css">
   <style>
     h2, h3 { color: var(--gold) !important; }
     .stat-value { color: var(--gold) !important; }
@@ -60,7 +60,7 @@
       <li><a href="profil.html">Profil Desa</a></li>
       <li><a class="active" href="data.html">Data Wilayah</a></li>
       <li><a href="galeri.html">Galeri</a></li>
-    </ul>
+   </ul>
   </nav>
 </header>
 
@@ -81,17 +81,45 @@
   </section>
   <hr>
 
-  <section class="fade-in">
-    <h3 style="color:var(--purple);font-weight:700">Data Wilayah</h3>
-    <ul style="font-weight:600;color:var(--text-dark);padding-left:18px;">
-      <li>Dusun Kuto (Dkh. Kuto, Dkh. Jetis, Dkh. Bangunsari)</li>
-      <li>Dusun Plosorejo (Dkh. Plosorejo, Dkh. Tegalrejo)</li>
-      <li>Dusun Randubener (Dkh. Randubener, Dkh. Jamus)</li>
-      <li>Dusun Grobogan (Dkh. Grobogan, Dkh. Ngesam, Dkh. Bligo)</li>
-      <li>Dusun Pengin (Dkh. Pengin, Dkh. Pencol, Dkh. Kudur)</li>
-      <li>Dusun Bandungan-Kasihan (Dkh. Bandungan, Dkh. Belukan, Dkh. Kasihan)</li>
-    </ul>
+ <section class="fade-in">
+  <h3 style="color:var(--purple);font-weight:700">Data Wilayah</h3>
+  <ul class="data-wilayah">
+    <li><span class="dusun">Dusun Kuto</span><span class="titikdua">:</span> Dkh. Kuto, Dkh. Jetis, Dkh. Bangunsari</li>
+    <li><span class="dusun">Dusun Plosorejo</span><span class="titikdua">:</span> Dkh. Plosorejo, Dkh. Tegalrejo</li>
+    <li><span class="dusun">Dusun Randubener</span><span class="titikdua">:</span> Dkh. Randubener, Dkh. Jamus</li>
+    <li><span class="dusun">Dusun Grobogan</span><span class="titikdua">:</span> Dkh. Grobogan, Dkh. Ngesam, Dkh. Bligo</li>
+    <li><span class="dusun">Dusun Pengin</span><span class="titikdua">:</span> Dkh. Pengin, Dkh. Pencol, Dkh. Kudur</li>
+    <li><span class="dusun">Dusun Bandungan-Kasihan</span><span class="titikdua">:</span> Dkh. Bandungan, Dkh. Belukan, Dkh. Kasihan</li>
+  </ul>
+</section>
+<hr>
+  
+ <div class="rating-contact-wrapper fade-in">
+
+  <section id="rating" class="container section">
+    <h2>Rating Pengunjung</h2>
+    <p>Berikan rating untuk website Desa Kuto :</p>
+
+    <div class="rating-box">
+      <span class="star" data-rate="1">★</span>
+      <span class="star" data-rate="2">★</span>
+      <span class="star" data-rate="3">★</span>
+      <span class="star" data-rate="4">★</span>
+      <span class="star" data-rate="5">★</span>
+    </div>
+
+    <p id="thanks-msg" style="display:none;margin-top:8px;color:#f6d679;font-size:16px;font-weight:600;">
+      ✅ Terima kasih atas penilaiannya!
+    </p>
   </section>
+
+  <section id="kontak" class="container section">
+    <h2>Kontak &amp; Layanan</h2>
+    <p>Untuk layanan dan informasi, hubungi via WhatsApp :</p>
+    <p><a class="btn-primary" href="https://wa.me/628999162001" target="_blank">WhatsApp</a></p>
+  </section>
+
+</div>
 
 </main>
 
@@ -116,8 +144,6 @@
   </div>
 </div>
 
-<footer class="site-footer container fade-in"><p>&copy; <span id="year"></span> DESA KUTO - JAWARA</p></footer>
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 <script>
   const modal = document.getElementById('modalPenduduk');
   const btnPenduduk = document.getElementById('btnPenduduk');
@@ -131,5 +157,47 @@
   btnRT.onclick = () => window.open("dokumen/ketua-rt.pdf", "_blank");
 </script>
 
+<footer class="site-footer fade-in">
+    <div class="container">
+      <p>&copy; <span id="year"></span> DESA KUTO — JAWARA</p>
+    </div>
+  </footer>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const stars = document.querySelectorAll(".star");
+  const thanks = document.getElementById("thanks-msg");
+  let ratingDone = false;
+
+  const savedRating = localStorage.getItem("desaKutoRating");
+if (savedRating) {
+  ratingDone = true;
+  for (let i = 0; i < savedRating; i++) {
+    stars[i].classList.add("active");
+  }
+  thanks.style.display = "block";
+}
+
+// Event klik bintang
+stars.forEach(star => {
+  star.addEventListener("click", () => {
+    if (ratingDone) return; // tidak bisa klik lagi
+
+    const rating = star.dataset.rate;
+    stars.forEach(s => s.classList.remove("active"));
+
+    for (let i = 0; i < rating; i++) {
+      stars[i].classList.add("active");
+    }
+
+    // Simpan ke localStorage
+    localStorage.setItem("desaKutoRating", rating);
+
+    thanks.style.display = "block";
+    ratingDone = true;
+  });
+});
+});
+</script>
 </body>
 </html>

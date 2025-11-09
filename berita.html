@@ -3,38 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Berita Desa Kuto — Resmi</title>
-  <link rel="icon" href="website/assets/images/favicon-gold.png" type="image/png">
-  <link rel="stylesheet" href="website/assets/css/main.css">
+  <title>Desa Kuto — #JAWARA</title>
+  <link rel="icon" href="assets/images/favicon-gold.png" type="image/png">
+  <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <style>
-/* === Fade-in Smooth Animation (Seperti Data.html) === */
 .fade-in {
   opacity: 0;
   transform: translateY(15px);
   animation: fadeIn .8s ease forwards;
 }
-
 @keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-/* Delay per section agar Cinematic */
-.site-header { animation-delay: 0.10s; }
-.hero        { animation-delay: 0.25s; }
-#visi        { animation-delay: 0.45s; }
-#sambutan    { animation-delay: 0.65s; }
-#berita      { animation-delay: 0.85s; }
-#kontak      { animation-delay: 1.05s; }
-.site-footer { animation-delay: 1.25s; }
 </style>
 
 <body>
   <header class="site-header">
-       <nav class="site-nav container">
+    <nav class="site-nav container">
       <ul>
         <li><a href="index.html">Beranda</a></li>
         <li><a href="berita.html" class="active">Berita</a></li>
@@ -45,30 +31,119 @@
     </nav>
   </header>
 
-     <section id="berita-list" class="container section fade-in">
-  <h2>Berita Desa Kuto</h2>
-  <div id="newsContainer"></div>
-</section>
+  <section id="berita-list" class="container section fade-in">
+    <h2>Berita Desa</h2>
+    <div id="newsContainer"></div>
+  </section>
+<hr>
 
+  <!-- Rating Pengunjung -->
+ <div class="rating-contact-wrapper fade-in">
 
-    <!-- Pagination placeholder (bisa dikembangkan) -->
-    <div style="text-align:center;margin-top:20px">
-<button class="slider-nav prev">
-    ‹
-</button>
-<button class="slider-nav next">
-    ›
-</button>
+  <section id="rating" class="container section">
+    <h2>Rating Pengunjung</h2>
+    <p>Berikan rating untuk website Desa Kuto :</p>
 
+    <div class="rating-box">
+      <span class="star" data-rate="1">★</span>
+      <span class="star" data-rate="2">★</span>
+      <span class="star" data-rate="3">★</span>
+      <span class="star" data-rate="4">★</span>
+      <span class="star" data-rate="5">★</span>
     </div>
-  </main>
+
+    <p id="thanks-msg" style="display:none;margin-top:8px;color:#f6d679;font-size:16px;font-weight:600;">
+      ✅ Terima kasih atas penilaiannya!
+    </p>
+  </section>
+
+  <section id="kontak" class="container section">
+    <h2>Kontak &amp; Layanan</h2>
+    <p>Untuk layanan dan informasi, hubungi via WhatsApp :</p>
+    <p><a class="btn-primary" href="https://wa.me/628999162001" target="_blank">WhatsApp</a></p>
+  </section>
+
+</div>
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; <span id="year"></span> Desa Kuto — Jawara.</p>
+      <p>&copy; <span id="year"></span> DESA KUTO - JAWARA</p>
     </div>
   </footer>
 
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+  <!-- ============================================= -->
+  <!-- ⬇️ Script Ambil Data Berita dari JSON -->
+  <!-- ============================================= -->
+  <script>
+    fetch('assets/data/berita.json')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('newsContainer');
+
+        data.berita.forEach(item => {
+          const beritaDiv = document.createElement('div');
+          beritaDiv.classList.add('berita-item');
+          beritaDiv.style.marginBottom = '30px';
+
+          beritaDiv.innerHTML = `
+            <h3>${item.judul}</h3>
+            <p>${item.isi}</p>
+            ${item.instagram ? 
+              `<blockquote class="instagram-media" data-instgrm-permalink="${item.instagram}" data-instgrm-version="14"></blockquote>` 
+              : ''}
+          `;
+
+          container.appendChild(beritaDiv);
+        });
+
+        // Jalankan ulang embed Instagram jika ada
+        if (window.instgrm) window.instgrm.Embeds.process();
+      })
+      .catch(err => console.error('Gagal memuat berita:', err));
+  </script>
+
+  <!-- Instagram Embed Script -->
+  <script async src="https://www.instagram.com/embed.js"></script>
+
+  <!-- Script tambahan lain -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const stars = document.querySelectorAll(".star");
+  const thanks = document.getElementById("thanks-msg");
+  let ratingDone = false;
+const savedRating = localStorage.getItem("desaKutoRating");
+if (savedRating) {
+  ratingDone = true;
+  for (let i = 0; i < savedRating; i++) {
+    stars[i].classList.add("active");
+  }
+  thanks.style.display = "block";
+}
+
+// Event klik bintang
+stars.forEach(star => {
+  star.addEventListener("click", () => {
+    if (ratingDone) return; // tidak bisa klik lagi
+
+    const rating = star.dataset.rate;
+    stars.forEach(s => s.classList.remove("active"));
+
+    for (let i = 0; i < rating; i++) {
+      stars[i].classList.add("active");
+    }
+
+    // Simpan ke localStorage
+    localStorage.setItem("desaKutoRating", rating);
+
+    thanks.style.display = "block";
+    ratingDone = true;
+  });
+});
+});
+</script>
 </body>
 </html>
+

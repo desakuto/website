@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Galeri — Desa Kuto</title>
+  <title>Desa Kuto — #JAWARA</title>
   <link rel="icon" href="assets/images/favicon-gold.png" type="image/png">
   <link rel="stylesheet" href="assets/css/main.css">
   <style>
@@ -54,30 +54,52 @@
   </header>
 
   <main class="container section">
-    <h2 class="fade-in">Galeri Desa Kuto</h2>
-
-    <div class="gallery-grid fade-in">
-      <img src="assets/images/gallery-1.jpg" alt="Galeri 1">
-      <img src="assets/images/gallery-2.jpg" alt="Galeri 2">
-      <img src="assets/images/gallery-3.jpg" alt="Galeri 3">
-      <img src="assets/images/gallery-4.jpg" alt="Galeri 4">
-      <img src="assets/images/gallery-5.jpg" alt="Galeri 5">
-      <img src="assets/images/gallery-6.jpg" alt="Galeri 6">
-    </div>
-  </main>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <div class="close" id="lbClose">&times;</div>
-    <img id="lbImage" src="" alt="Preview">
-  </div>
-
-  <footer class="site-footer">
-    <div class="container"><p>&copy; <span id="year"></span> Desa Kuto — Jawara.</p></div>
-  </footer>
+   <div class="gallery-grid fade-in" id="galleryContainer"></div>
 
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
+fetch('assets/data/galeri.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('galleryContainer');
+    data.galeri.forEach(item => {
+      const img = document.createElement('img');
+      img.src = item.gambar;
+      img.alt = item.caption;
+      container.appendChild(img);
+    });
+  })
+  .catch(err => console.error('Gagal memuat galeri:', err));
+</script>
+
+<hr>
+ <div class="rating-contact-wrapper fade-in">
+
+  <section id="rating" class="container section">
+    <h2>Rating Pengunjung</h2>
+    <p>Berikan rating untuk website Desa Kuto :</p>
+
+    <div class="rating-box">
+      <span class="star" data-rate="1">★</span>
+      <span class="star" data-rate="2">★</span>
+      <span class="star" data-rate="3">★</span>
+      <span class="star" data-rate="4">★</span>
+      <span class="star" data-rate="5">★</span>
+    </div>
+
+    <p id="thanks-msg" style="display:none;margin-top:8px;color:#f6d679;font-size:16px;font-weight:600;">
+      ✅ Terima kasih atas penilaiannya!
+    </p>
+  </section>
+
+  <section id="kontak" class="container section">
+    <h2>Kontak &amp; Layanan</h2>
+    <p>Untuk layanan dan informasi, hubungi via WhatsApp :</p>
+    <p><a class="btn-primary" href="https://wa.me/628999162001" target="_blank">WhatsApp</a></p>
+   </section>
+  </div>
+</main>
+
+<script>
 const imgs = document.querySelectorAll('.gallery-grid img');
 const lightbox = document.getElementById('lightbox');
 const lbImage = document.getElementById('lbImage');
@@ -89,6 +111,52 @@ imgs.forEach(i => i.addEventListener('click', e => {
 }));
 lbClose.addEventListener('click', ()=> lightbox.style.display = 'none');
 lightbox.addEventListener('click', (e)=> { if(e.target===lightbox) lightbox.style.display='none'; });
+document.getElementById('year').textContent=new Date().getFullYear()
 </script>
+
+ <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const stars = document.querySelectorAll(".star");
+  const thanks = document.getElementById("thanks-msg");
+  let ratingDone = false;
+
+  const savedRating = localStorage.getItem("desaKutoRating");
+if (savedRating) {
+  ratingDone = true;
+  for (let i = 0; i < savedRating; i++) {
+    stars[i].classList.add("active");
+  }
+  thanks.style.display = "block";
+}
+
+// Event klik bintang
+stars.forEach(star => {
+  star.addEventListener("click", () => {
+    if (ratingDone) return; // tidak bisa klik lagi
+
+    const rating = star.dataset.rate;
+    stars.forEach(s => s.classList.remove("active"));
+
+    for (let i = 0; i < rating; i++) {
+      stars[i].classList.add("active");
+    }
+
+    // Simpan ke localStorage
+    localStorage.setItem("desaKutoRating", rating);
+
+    thanks.style.display = "block";
+    ratingDone = true;
+  });
+ });
+});
+</script>
+
+<footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> DESA KUTO - JAWARA</p>
+    </div>
+  </footer>
+
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 </body>
 </html>

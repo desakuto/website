@@ -1,0 +1,28 @@
+{
+  "galeri": [
+    {
+      "gambar": "assets/images/gallery-1.jpg",
+      "caption": "Kegiatan Upacara Adat Desa"
+    },
+    {
+      "gambar": "assets/images/gallery-2.jpg",
+      "caption": "Gotong Royong Masyarakat"
+    },
+    {
+      "gambar": "assets/images/gallery-3.jpg",
+      "caption": "Rapat Koordinasi Pemerintah Desa"
+    },
+    {
+      "gambar": "assets/images/gallery-4.jpg",
+      "caption": "Perayaan HUT RI ke-79"
+    },
+    {
+      "gambar": "assets/images/gallery-5.jpg",
+      "caption": "Penyaluran Bantuan Sosial"
+    },
+    {
+      "gambar": "assets/images/gallery-6.jpg",
+      "caption": "Kegiatan Posyandu Desa"
+    }
+  ]
+}

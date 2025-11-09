@@ -55,11 +55,11 @@ h1, h2, h3, h4 {
 
 .site-name h1 {
   margin: 0;
-  font-size: 24px; /* slightly smaller */
+  font-size: 36px; /* slightly smaller */
 }
 
 .site-name .tagline {
-  font-size: 12px; /* B selected */
+  font-size: 30px; /* B selected */
   color: var(--cream);
   margin-top: -2px;
 }
@@ -330,4 +330,116 @@ h1, h2, h3, h4 {
 
 .read-more:hover {
   color: #82c0ff !important;
+}
+.data-wilayah {
+  list-style: none;
+  padding-left: 0;
+  margin: 10px 0;
+  font-weight: 600;
+  color: var(--text-dark);
+  display: grid;
+  gap: 6px;
+}
+
+.data-wilayah li {
+  display: grid;
+  grid-template-columns: 220px 15px auto; /* 3 kolom: nama, titik dua, isi */
+  align-items: start;
+}
+
+.data-wilayah .dusun {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.data-wilayah .titikdua {
+  text-align: center;
+  font-weight: 700;
+}
+/* === Gabungkan Rating & Kontak Jadi Satu Baris === */
+.rating-contact-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  transform: scale(0.9); /* sedikit lebih kecil */
+}
+
+/*==== RATING & KONTAK====*/
+
+.rating-contact-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  flex-wrap: wrap;
+}
+
+.rating-contact-wrapper section {
+  flex: 1 1 45%;
+  padding: 5px 10px;
+  margin: 0;
+}
+
+.rating-contact-wrapper h2 {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+}
+
+.rating-box {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  margin-top: 6px;
+}
+
+.star {
+  cursor: pointer;
+  font-size: 2.8rem;
+  color: #6d4ebf;
+  transition: transform 0.2s, color 0.3s;
+}
+.star:hover {
+  transform: scale(1.2);
+  color: #f6d679;
+}
+.star.active {
+  color: #f6d679;
+}
+
+@media (max-width: 768px) {
+  .rating-contact-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .rating-contact-wrapper section {
+    width: 100%;
+    text-align: center;
+  }
+}
+.info-desa {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.info-desa td {
+  padding: 4px 8px;
+  vertical-align: top;
+}
+
+.info-desa .label {
+  font-weight: 700;
+  color: #f6d679;
+  width: 180px; /* kolom kiri sejajar */
+  white-space: nowrap;
+}
+
+.info-desa .value {
+  color: #ffffff;
+  line-height: 1.6;
 }
