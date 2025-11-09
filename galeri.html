@@ -65,7 +65,7 @@ fetch('assets/data/galeri.json')
     data.galeri.forEach(item => {
       list.innerHTML += `
         <div class="gallery-item fade-in">
-          <img src="${item.gambar}" alt="${item.caption}">
+          <img src="${item.foto}" alt="${item.caption}">
           <p>${item.caption}</p>
         </div>
       `;
