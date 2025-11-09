@@ -60,15 +60,19 @@
 fetch('assets/data/galeri.json')
   .then(res => res.json())
   .then(data => {
-    const container = document.getElementById('galleryContainer');
+    const list = document.getElementById("galeriList");
+
     data.galeri.forEach(item => {
-      const img = document.createElement('img');
-      img.src = item.gambar;
-      img.alt = item.caption;
-      container.appendChild(img);
+      list.innerHTML += `
+        <div class="gallery-item fade-in">
+          <img src="${item.gambar}" alt="${item.caption}">
+          <p>${item.caption}</p>
+        </div>
+      `;
     });
   })
-  .catch(err => console.error('Gagal memuat galeri:', err));
+  .catch(err => console.error('Error:', err));
+
 </script>
 
 <hr>
