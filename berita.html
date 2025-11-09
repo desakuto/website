@@ -75,35 +75,28 @@
   <!-- ⬇️ Script Ambil Data Berita dari JSON -->
   <!-- ============================================= -->
   <script>
-    fetch('assets/data/berita.json')
-      .then(res => res.json())
-      .then(data => {
-        const container = document.getElementById('newsContainer');
+   fetch('assets/data/berita.json')
+  .then(res => res.json())
+  .then(data => {
+    const news = data.berita;
+    news.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+    const terbaru = news.slice(0, 3);
+    const list = document.getElementById("beritaTerbaru");
 
-        data.berita.forEach(item => {
-          const beritaDiv = document.createElement('div');
-          beritaDiv.classList.add('berita-item');
-          beritaDiv.style.marginBottom = '30px';
-
-          beritaDiv.innerHTML = `
-            <h3>${item.judul}</h3>
-            <p>${item.isi}</p>
-            ${item.instagram ? 
-              `<blockquote class="instagram-media" data-instgrm-permalink="${item.instagram}" data-instgrm-version="14"></blockquote>` 
-              : ''}
-          `;
-
-          container.appendChild(beritaDiv);
-        });
-
-        // Jalankan ulang embed Instagram jika ada
-        if (window.instgrm) window.instgrm.Embeds.process();
-      })
-      .catch(err => console.error('Gagal memuat berita:', err));
+    terbaru.forEach(item => {
+      list.innerHTML += `
+        <article class="news fade-in">
+          <h4>${item.judul}</h4>
+          <p class="meta">${item.tanggal}</p>
+          <a href="${item.instagram}" target="_blank" class="read-more">
+            Lihat di Instagram
+          </a>
+        </article>
+      `;
+    });
+  })
+  .catch(err => console.error('Error:', err));
   </script>
-
-  <!-- Instagram Embed Script -->
-  <script async src="https://www.instagram.com/embed.js"></script>
 
   <!-- Script tambahan lain -->
   <script>
