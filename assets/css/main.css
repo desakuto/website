@@ -443,3 +443,9 @@ h1, h2, h3, h4 {
   color: #ffffff;
   line-height: 1.6;
 }
+/* Menyembunyikan bingkai (border) iframe Instagram */
+.ig-wrapper iframe {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
