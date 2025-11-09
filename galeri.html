@@ -60,7 +60,7 @@
 fetch('assets/data/galeri.json')
   .then(res => res.json())
   .then(data => {
-    const list = document.getElementById("galeriList");
+    const list = document.getElementById("galleryContainer");
 
     data.galeri.forEach(item => {
       list.innerHTML += `
