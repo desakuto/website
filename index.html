@@ -268,16 +268,6 @@ fetch('assets/data/berita.json')
   <a href="https://wa.me/628999162001" class="wa-floating" target="_blank">💬</a>
 
 <script>
-  document.getElementById('year').textContent=new Date().getFullYear();
-  const slider = document.getElementById('newsSlider');
-  let autoScroll = setInterval(()=>slideRight(), 3500);
-  slider.addEventListener('mouseover', ()=>clearInterval(autoScroll));
-  slider.addEventListener('mouseout', ()=>autoScroll = setInterval(()=>slideRight(), 3500));
-  function slideLeft(){ slider.scrollBy({left:-300, behavior:'smooth'}); }
-  function slideRight(){ slider.scrollBy({left:300, behavior:'smooth'}); }
-</script>
-
-<script>
 document.addEventListener("DOMContentLoaded", function() {
   const stars = document.querySelectorAll(".star");
   const thanks = document.getElementById("thanks-msg");
