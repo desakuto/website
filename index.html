@@ -200,21 +200,19 @@
 fetch('assets/data/berita.json')
   .then(res => res.json())
   .then(data => {
-    // Urutkan menurut tanggal terbaru
-    data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
-
-    const terbaru = data.slice(0, 3);
+    const news = data.berita;
+    news.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+    const terbaru = news.slice(0, 3);
     const list = document.getElementById("beritaTerbaru");
 
     terbaru.forEach(item => {
       list.innerHTML += `
         <article class="news fade-in">
-          <img src="${item.gambar}" class="news-thumb" alt="${item.judul}">
           <h4>${item.judul}</h4>
-          <p class="meta">${item.tanggal} · ${item.kategori}</p>
-          <p>${item.excerpt} 
-            <a href="${item.link}" class="read-more">Baca selengkapnya</a>
-          </p>
+          <p class="meta">${item.tanggal}</p>
+          <a href="${item.instagram}" target="_blank" class="read-more">
+            Lihat di Instagram
+          </a>
         </article>
       `;
     });
