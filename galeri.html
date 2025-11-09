@@ -57,7 +57,6 @@
    <div class="gallery-grid fade-in" id="galleryContainer"></div>
 
 <script>
-<script>
 fetch('assets/data/galeri.json')
   .then(res => res.json())
   .then(data => {
@@ -72,6 +71,26 @@ fetch('assets/data/galeri.json')
         </div>
       `;
     });
+
+    // ✅ Lightbox muncul setelah gambar selesai dimuat
+    const imgs = document.querySelectorAll('.gallery-item img');
+    const lightbox = document.getElementById('lightbox');
+    const lbImage = document.getElementById('lbImage');
+    const lbClose = document.getElementById('lbClose');
+
+    imgs.forEach(img => {
+      img.addEventListener('click', () => {
+        lbImage.src = img.src;
+        lightbox.style.display = 'flex';
+      });
+    });
+
+    lbClose.addEventListener('click', () => lightbox.style.display = 'none');
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) lightbox.style.display = 'none';
+    });
+  })
+  .catch(err => console.error("Gagal memuat galeri:", err));
 </script>
 
 <hr>
@@ -102,17 +121,6 @@ fetch('assets/data/galeri.json')
   </div>
 </main>
 
-<script>
-const imgs = document.querySelectorAll('.gallery-item img');
-    imgs.forEach(img => {
-      img.addEventListener('click', () => {
-        lbImage.src = img.src;
-        lightbox.style.display = 'flex';
-      });
-    });
-  })
-  .catch(err => console.error("Gagal memuat galeri:", err));
-</script>
 
 <!-- ✅ Modal Lightbox -->
 <div id="lightbox" class="lightbox">
@@ -120,17 +128,6 @@ const imgs = document.querySelectorAll('.gallery-item img');
   <img id="lbImage" src="" alt="">
 </div>
 
-<script>
-const lightbox = document.getElementById('lightbox');
-const lbImage = document.getElementById('lbImage');
-const lbClose = document.getElementById('lbClose');
-
-// Tutup Lightbox
-lbClose.addEventListener('click', () => lightbox.style.display = 'none');
-lightbox.addEventListener('click', (e) => {
-  if (e.target === lightbox) lightbox.style.display = 'none';
-});
-</script>
 
  <script>
 document.addEventListener("DOMContentLoaded", function() {
