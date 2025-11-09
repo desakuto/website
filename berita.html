@@ -39,7 +39,7 @@
 
   <hr>
 
-  <!-- Rating -->
+  <!-- Rating Pengunjung -->
   <section id="rating" class="container section fade-in">
     <h2>Rating Pengunjung</h2>
     <p>Berikan rating untuk website Desa Kuto :</p>
@@ -62,42 +62,47 @@
   </footer>
 
 <script>
-<script>
-fetch('assets/data/berita.json')
+fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absolute untuk memastikan akses
   .then(res => res.json())
-  .then(data => {
+  .then(async data => {
     const list = document.getElementById("newsContainer");
     list.innerHTML = "";
 
+    // Urutkan dari terbaru ke terlama
     data.berita.sort((a, b) =>
-      new Date(b.tanggal.split('-').reverse().join('-')) -
-      new Date(a.tanggal.split('-').reverse().join('-'))
+      new Date(b.tanggal) - new Date(a.tanggal)
     );
 
-    data.berita.forEach(item => {
+    for (const item of data.berita) {
       let igEmbedHTML = "";
-      
+
+      // Jika ada Instagram URL, request oEmbed
       if (item.instagram) {
-        igEmbedHTML = `
-          <blockquote class="instagram-media"
-            data-instgrm-permalink="${item.instagram}"
-            data-instgrm-version="14"
-            style="max-width: 540px; width: 100%; margin: 15px auto;">
-          </blockquote>
-        `;
+        const oembedUrl = `https://graph.facebook.com/v19.0/instagram_oembed?url=${encodeURIComponent(item.instagram)}&maxwidth=540&omitscript=true`;
+
+        try {
+          const igRes = await fetch(oembedUrl);
+          const igData = await igRes.json();
+          igEmbedHTML = igData.html || "";
+        } catch (err) {
+          console.error("Embed gagal:", err);
+        }
       }
 
       list.innerHTML += `
-        <article class="berita-item fade-in" style="text-align:center;margin-bottom:45px;">
+        <article class="berita-item fade-in" style="text-align:center; margin-bottom:50px;">
           <h3>${item.judul}</h3>
           <p style="color:#aaa;font-size:14px;">${item.tanggal}</p>
           ${igEmbedHTML}
           <hr style="margin-top:35px;">
         </article>
       `;
-    });
+    }
 
-    if (window.instgrm) window.instgrm.Embeds.process();
+    // Menjalankan embed Instagram setelah konten dimuat
+    if (window.instgrm) {
+      window.instgrm.Embeds.process();
+    }
   })
   .catch(e => console.error("Gagal memuat berita:", e));
 </script>
@@ -106,28 +111,31 @@ fetch('assets/data/berita.json')
 
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
-document.addEventListener("DOMContentLoaded", () => {
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
   const stars = document.querySelectorAll(".star");
   const thanks = document.getElementById("thanks-msg");
-  const saved = localStorage.getItem("desaKutoRating");
-  let done = false;
-
-  if (saved) {
-    done = true;
-    for (let i = 0; i < saved; i++)
+  let ratingDone = false;
+  const savedRating = localStorage.getItem("desaKutoRating");
+  if (savedRating) {
+    ratingDone = true;
+    for (let i = 0; i < savedRating; i++) {
       stars[i].classList.add("active");
+    }
     thanks.style.display = "block";
   }
 
-  stars.forEach(s => {
-    s.addEventListener("click", () => {
-      if (done) return;
-      const rate = s.dataset.rate;
-      stars.forEach(x => x.classList.remove("active"));
-      for (let i = 0; i < rate; i++) stars[i].classList.add("active");
-      localStorage.setItem("desaKutoRating", rate);
+  stars.forEach(star => {
+    star.addEventListener("click", () => {
+      if (ratingDone) return;
+      const rating = star.dataset.rate;
+      stars.forEach(s => s.classList.remove("active"));
+      for (let i = 0; i < rating; i++) stars[i].classList.add("active");
+      localStorage.setItem("desaKutoRating", rating);
       thanks.style.display = "block";
-      done = true;
+      ratingDone = true;
     });
   });
 });
