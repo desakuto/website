@@ -62,9 +62,9 @@
   </footer>
 
 <script>
-fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absolute untuk memastikan akses
+fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absolute
   .then(res => res.json())
-  .then(async data => {
+  .then(data => {
     const list = document.getElementById("newsContainer");
     list.innerHTML = "";
 
@@ -73,41 +73,38 @@ fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absol
       new Date(b.tanggal) - new Date(a.tanggal)
     );
 
-    for (const item of data.berita) {
+    data.berita.forEach(item => {
       let igEmbedHTML = "";
 
-      // Jika ada Instagram URL, request oEmbed
+      // Jika ada URL Instagram untuk di-embed
       if (item.instagram) {
-        const oembedUrl = `https://graph.facebook.com/v19.0/instagram_oembed?url=${encodeURIComponent(item.instagram)}&maxwidth=540&omitscript=true`;
-
-        try {
-          const igRes = await fetch(oembedUrl);
-          const igData = await igRes.json();
-          igEmbedHTML = igData.html || "";
-        } catch (err) {
-          console.error("Embed gagal:", err);
-        }
+        igEmbedHTML = `
+          <blockquote class="instagram-media" 
+            data-instgrm-permalink="${item.instagram}"
+            data-instgrm-version="14"
+            style="max-width:540px;width:100%;margin:10px auto;">
+          </blockquote>
+        `;
       }
 
       list.innerHTML += `
-        <article class="berita-item fade-in" style="text-align:center; margin-bottom:50px;">
+        <article class="berita-item fade-in" style="text-align:center;margin-bottom:50px;">
           <h3>${item.judul}</h3>
           <p style="color:#aaa;font-size:14px;">${item.tanggal}</p>
           ${igEmbedHTML}
           <hr style="margin-top:35px;">
         </article>
       `;
-    }
+    });
 
-    // Menjalankan embed Instagram setelah konten dimuat
-    if (window.instgrm) {
-      window.instgrm.Embeds.process();
-    }
+    // Menjalankan Instagram Embed untuk semua post setelah dimuat
+    if (window.instgrm) window.instgrm.Embeds.process();
   })
   .catch(e => console.error("Gagal memuat berita:", e));
 </script>
 
 <script async src="https://www.instagram.com/embed.js"></script>
+
 
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
