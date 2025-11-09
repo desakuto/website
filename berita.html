@@ -2,21 +2,22 @@
 <html lang="id">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Desa Kuto — #JAWARA</title>
   <link rel="icon" href="assets/images/favicon-gold.png" type="image/png">
   <link rel="stylesheet" href="assets/css/main.css">
+
+  <style>
+    .fade-in {
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fadeIn .8s ease forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
-<style>
-.fade-in {
-  opacity: 0;
-  transform: translateY(15px);
-  animation: fadeIn .8s ease forwards;
-}
-@keyframes fadeIn {
-  to { opacity: 1; transform: translateY(0); }
-}
-</style>
 
 <body>
   <header class="site-header">
@@ -31,19 +32,17 @@
     </nav>
   </header>
 
-  <section id="berita-list" class="container section fade-in">
+  <section class="container section fade-in">
     <h2>Berita Desa</h2>
-    <div id="beritaTerbaru"></div>
+    <div id="newsContainer"></div>
   </section>
-<hr>
 
-  <!-- Rating Pengunjung -->
- <div class="rating-contact-wrapper fade-in">
+  <hr>
 
-  <section id="rating" class="container section">
+  <!-- Rating -->
+  <section id="rating" class="container section fade-in">
     <h2>Rating Pengunjung</h2>
     <p>Berikan rating untuk website Desa Kuto :</p>
-
     <div class="rating-box">
       <span class="star" data-rate="1">★</span>
       <span class="star" data-rate="2">★</span>
@@ -51,19 +50,10 @@
       <span class="star" data-rate="4">★</span>
       <span class="star" data-rate="5">★</span>
     </div>
-
     <p id="thanks-msg" style="display:none;margin-top:8px;color:#f6d679;font-size:16px;font-weight:600;">
       ✅ Terima kasih atas penilaiannya!
     </p>
   </section>
-
-  <section id="kontak" class="container section">
-    <h2>Kontak &amp; Layanan</h2>
-    <p>Untuk layanan dan informasi, hubungi via WhatsApp :</p>
-    <p><a class="btn-primary" href="https://wa.me/628999162001" target="_blank">WhatsApp</a></p>
-  </section>
-
-</div>
 
   <footer class="site-footer">
     <div class="container">
@@ -71,72 +61,74 @@
     </div>
   </footer>
 
-  <!-- ============================================= -->
-  <!-- ⬇️ Script Ambil Data Berita dari JSON -->
-  <!-- ============================================= -->
-  <script>
-   fetch('assets/data/berita.json')
+<script>
+fetch('assets/data/berita.json')
   .then(res => res.json())
-  .then(data => {
-    const news = data.berita;
-    news.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
-    const terbaru = news.slice(0, 3);
-    const list = document.getElementById("beritaTerbaru");
+  .then(async data => {
+    const list = document.getElementById("newsContainer");
+    list.innerHTML = "";
 
-    terbaru.forEach(item => {
+    data.berita.sort((a, b) =>
+      new Date(b.tanggal.split('-').reverse().join('-')) -
+      new Date(a.tanggal.split('-').reverse().join('-'))
+    );
+
+    for (const item of data.berita) {
+      let igHTML = "";
+      if (item.instagram) {
+        try {
+          const url = `https://graph.facebook.com/v19.0/instagram_oembed?url=${encodeURIComponent(item.instagram)}&maxwidth=540&omitscript=true`;
+          const r = await fetch(url);
+          const j = await r.json();
+          igHTML = j.html || "";
+        } catch (e) { console.error(e); }
+      }
+
       list.innerHTML += `
-        <article class="news fade-in">
-          <h4>${item.judul}</h4>
-          <p class="meta">${item.tanggal}</p>
-          <a href="${item.instagram}" target="_blank" class="read-more">
-            Lihat di Instagram
-          </a>
+        <article class="berita-item fade-in" style="text-align:center;margin-bottom:45px;">
+          <h3>${item.judul}</h3>
+          <p style="color:#aaa;font-size:14px;">${item.tanggal}</p>
+          <div class="ig-wrapper">${igHTML}</div>
+          <hr style="margin-top:35px;">
         </article>
       `;
-    });
-  })
-  .catch(err => console.error('Error:', err));
-  </script>
-
-  <!-- Script tambahan lain -->
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const stars = document.querySelectorAll(".star");
-  const thanks = document.getElementById("thanks-msg");
-  let ratingDone = false;
-const savedRating = localStorage.getItem("desaKutoRating");
-if (savedRating) {
-  ratingDone = true;
-  for (let i = 0; i < savedRating; i++) {
-    stars[i].classList.add("active");
-  }
-  thanks.style.display = "block";
-}
-
-// Event klik bintang
-stars.forEach(star => {
-  star.addEventListener("click", () => {
-    if (ratingDone) return; // tidak bisa klik lagi
-
-    const rating = star.dataset.rate;
-    stars.forEach(s => s.classList.remove("active"));
-
-    for (let i = 0; i < rating; i++) {
-      stars[i].classList.add("active");
     }
 
-    // Simpan ke localStorage
-    localStorage.setItem("desaKutoRating", rating);
+    if (window.instgrm) window.instgrm.Embeds.process();
+  })
+  .catch(e => console.error("Gagal memuat berita:", e));
+</script>
 
+<script async src="https://www.instagram.com/embed.js"></script>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+document.addEventListener("DOMContentLoaded", () => {
+  const stars = document.querySelectorAll(".star");
+  const thanks = document.getElementById("thanks-msg");
+  const saved = localStorage.getItem("desaKutoRating");
+  let done = false;
+
+  if (saved) {
+    done = true;
+    for (let i = 0; i < saved; i++)
+      stars[i].classList.add("active");
     thanks.style.display = "block";
-    ratingDone = true;
+  }
+
+  stars.forEach(s => {
+    s.addEventListener("click", () => {
+      if (done) return;
+      const rate = s.dataset.rate;
+      stars.forEach(x => x.classList.remove("active"));
+      for (let i = 0; i < rate; i++) stars[i].classList.add("active");
+      localStorage.setItem("desaKutoRating", rate);
+      thanks.style.display = "block";
+      done = true;
+    });
   });
 });
-});
 </script>
+
 </body>
 </html>
-
