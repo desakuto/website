@@ -70,8 +70,7 @@
    </section>
   </div>
 </main>
-  </footer>
-
+   
 <script>
 fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absolute
   .then(res => res.json())
@@ -116,11 +115,6 @@ fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absol
 
 <script async src="https://www.instagram.com/embed.js"></script>
 
-
-<script>
-document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   const stars = document.querySelectorAll(".star");
@@ -148,6 +142,16 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 </script>
-
+  
+ <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> DESA KUTO - JAWARA</p>
+    </div>
+  </footer>
+  
+  <script>
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+  
 </body>
 </html>
