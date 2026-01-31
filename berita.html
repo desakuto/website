@@ -72,13 +72,13 @@
 </main>
    
 <script>
-fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absolute
+fetch('https://desakuto.github.io/website/assets/data/berita.json')
   .then(res => res.json())
   .then(data => {
     const list = document.getElementById("newsContainer");
     list.innerHTML = "";
 
-    // Urutkan dari terbaru ke terlama
+    // Urutkan dari terbaru
     data.berita.sort((a, b) =>
       new Date(b.tanggal) - new Date(a.tanggal)
     );
@@ -87,15 +87,18 @@ fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absol
       let igEmbedHTML = "";
       let pdfHTML = "";
 
-      // Jika ada URL Instagram untuk di-embed
+      // Instagram
       if (item.instagram) {
         igEmbedHTML = `
-          <blockquote class="instagram-media" 
+          <blockquote class="instagram-media"
             data-instgrm-permalink="${item.instagram}"
             data-instgrm-version="14"
             style="max-width:540px;width:100%;margin:10px auto;">
           </blockquote>
-          // PDF
+        `;
+      }
+
+      // PDF
       if (item.pdf) {
         pdfHTML = `
           <div style="margin-top:20px;">
@@ -105,22 +108,25 @@ fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absol
           </div>
         `;
       }
-      
+
       list.innerHTML += `
         <article class="berita-item fade-in" style="text-align:center;margin-bottom:50px;">
           <h3>${item.judul}</h3>
           <p style="color:#aaa;font-size:14px;">${item.tanggal}</p>
+
           <div class="ig-wrapper">${igEmbedHTML}</div>
+          ${pdfHTML}
+
           <hr style="margin-top:35px;">
         </article>
       `;
     });
 
-    // Menjalankan Instagram Embed untuk semua post setelah dimuat
     if (window.instgrm) window.instgrm.Embeds.process();
   })
   .catch(e => console.error("Gagal memuat berita:", e));
 </script>
+
 
 <script async src="https://www.instagram.com/embed.js"></script>
 
