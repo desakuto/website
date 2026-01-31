@@ -85,6 +85,7 @@ fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absol
 
     data.berita.forEach(item => {
       let igEmbedHTML = "";
+      let pdfHTML = "";
 
       // Jika ada URL Instagram untuk di-embed
       if (item.instagram) {
@@ -96,7 +97,15 @@ fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absol
           </blockquote>
         `;
       }
-
+      // PDF
+      if (item.pdf) {
+        pdfHTML = `
+          <div style="margin-top:20px;">
+            <a href="${item.pdf}" target="_blank" class="btn-primary">
+              📄 Lihat / Unduh Dokumen PDF
+            </a>
+          </div>
+          
       list.innerHTML += `
         <article class="berita-item fade-in" style="text-align:center;margin-bottom:50px;">
           <h3>${item.judul}</h3>
