@@ -63,12 +63,12 @@
      {
       "judul": "Laporan Penyelenggaran Pemerintahan Desa (LPPD) Akhir Tahun Anggaran 2025",
       "tanggal": "2026-01-09",
-      "pdf": "https://desakuto.github.io/website/assets/dokumen/LPPD-2025.pdf"
+      "pdf": "https://github.com/desakuto/website/tree/main/dokumen/LPPD-2025.pdf"
     },
      {
       "judul": "Informasi Penyelenggaran Pemerintahan Desa (IPPD) Tahun Anggaran 2025",
       "tanggal": "2026-01-09",
-      "pdf": "https://desakuto.github.io/website/assets/dokumen/IPPD-2025.pdf"
+      "pdf": "https://github.com/desakuto/website/tree/main/dokumen/IPPD-2025.pdf"
     }
   ]
 }
