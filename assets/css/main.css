@@ -453,3 +453,9 @@ h1, h2, h3, h4 {
   text-align: left;
   margin-left: 20px; /* Memberikan sedikit ruang dari kiri */
 }
+/* RESPONSIVE PDF */
+@media (max-width: 768px) {
+  iframe {
+    height: 450px;
+  }
+}
