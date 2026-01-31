@@ -95,9 +95,7 @@ fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absol
             data-instgrm-version="14"
             style="max-width:540px;width:100%;margin:10px auto;">
           </blockquote>
-        `;
-      }
-      // PDF
+          // PDF
       if (item.pdf) {
         pdfHTML = `
           <div style="margin-top:20px;">
@@ -105,7 +103,9 @@ fetch('https://desakuto.github.io/website/assets/data/berita.json') // URL absol
               📄 Lihat / Unduh Dokumen PDF
             </a>
           </div>
-          
+        `;
+      }
+      
       list.innerHTML += `
         <article class="berita-item fade-in" style="text-align:center;margin-bottom:50px;">
           <h3>${item.judul}</h3>
